@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Obter Localização</title>
+</head>
+<body>
+  <h1>Clique para compartilhar sua localização</h1>
+  <button onclick="getLocation()">Compartilhar Localização</button>
+  <p id="output"></p>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("output").innerText = "Geolocalização não é suportada.";
+      }
+    }
+
+    function showPosition(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      document.getElementById("output").innerText = `Latitude: ${lat}, Longitude: ${lon}`;
+      // Aqui você pode enviar os dados para um servidor com fetch/AJAX
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          alert("Permissão negada.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Informação de localização indisponível.");
+          break;
+        case error.TIMEOUT:
+          alert("Tempo de requisição excedido.");
+          break;
+        default:
+          alert("Erro desconhecido.");
+          break;
+      }
+    }
+  </script>
+</body>
+</html>
